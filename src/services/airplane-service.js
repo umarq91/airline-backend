@@ -24,6 +24,21 @@ async function createAirplane(data) {
   }
 }
 
+
+async function getAirplanes(){
+  try {
+      const airplanes = await airplaneRepo.getAll();
+      return airplanes;
+  } catch (error) {
+    console.log(error)
+    throw new ApiError(
+      "Cannot fetch airplanes",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 module.exports = {
   createAirplane,
+  getAirplanes
 };

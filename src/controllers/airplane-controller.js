@@ -9,11 +9,22 @@ async function createAirplane(req, res) {
       capacity: req.body.capacity,
     });
     SuccessResponse.data = airplane;
-    res.status(StatusCodes.OK).json(SuccessResponse);
+    res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (error) {
     ErrorReponse.error = error;
     res.status(error.statusCode).json(ErrorReponse);
   }
 }
 
-module.exports = { createAirplane };
+async function getAirplanes(req, res) {
+  try {
+    const airplanes = await AirplaneSerice.getAirplanes();
+    SuccessResponse.data=airplanes;
+    res.status(StatusCodes.OK).json(SuccessResponse);
+    return airplanes;
+  } catch (error) {
+    ErrorReponse.error = error;
+    res.status(error.statusCode).json(ErrorReponse);
+  }
+}
+module.exports = { createAirplane,getAirplanes };
