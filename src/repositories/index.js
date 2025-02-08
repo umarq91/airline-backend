@@ -1,4 +1,5 @@
 
  module.exports={
-        AirplaneRepository:require('./airplane-repository')
+        AirplaneRepository:require('./airplane-repository'),
+        CityReposity:require('./city-repository')
 }
