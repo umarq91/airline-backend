@@ -52,8 +52,24 @@ async function getAirplane(id){
   }
 }
 
+async function deleteAirplane(id){
+  try {
+    const airplane = await airplaneRepo.destroy(id);
+    return airplane;
+  } catch (error) {
+    if(error.statusCode===StatusCodes.NOT_FOUND){
+      throw new ApiError("Airplane you are trying to delete is not present",StatusCodes.NOT_FOUND)
+    }
+    throw new ApiError(
+      "Cannot fetch airplane by id",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 module.exports = {
   createAirplane,
   getAirplanes,
-  getAirplane
+  getAirplane,
+  deleteAirplane
 };

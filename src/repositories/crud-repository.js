@@ -13,10 +13,18 @@ class CrudRepository {
     return response;
   }
 
-  async destroy(query) {
+  async destroy(id) {
     const response = await this.model.destroy({
-      where: query,
+      where: {
+        id:id
+      },
     });
+    if (!response) {
+      throw new ApiError(
+        "Resource you requested is not present",
+        StatusCodes.NOT_FOUND
+      );
+    }
     return response;
   }
 
