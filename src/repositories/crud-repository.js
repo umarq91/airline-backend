@@ -1,5 +1,7 @@
 const { where } = require("sequelize");
 const { Logger } = require("../config");
+const ApiError = require("../utils/errors/app-error");
+const { StatusCodes } = require("http-status-codes");
 
 class CrudRepository {
   constructor(model) {
@@ -20,6 +22,12 @@ class CrudRepository {
 
   async get(id) {
     const response = await this.model.findByPk(id);
+    if (!response) {
+      throw new ApiError(
+        "Resource you requested is not present",
+        StatusCodes.NOT_FOUND
+      );
+    }
     return response;
   }
 
